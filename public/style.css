@@ -1,0 +1,305 @@
+/* ============================================
+   ✨ Base Layout
+============================================ */
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  font-family: Arial, sans-serif;
+  background-color: #f8f8f8;
+  color: #333;
+}
+
+main {
+  flex: 1;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+h1 {
+  color: #2c3e50;
+  font-size: 2.5rem;
+}
+
+p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+
+/* ============================================
+   🎬 Films Page
+============================================ */
+
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin: 2rem auto 4rem;
+  max-width: 960px;
+  padding: 0 1rem;
+}
+
+.video-card {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  padding: 1rem;
+  min-height: 250px;
+  position: relative;
+  overflow: hidden;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: default;
+}
+
+.video-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.video-card h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
+  text-align: left;
+}
+
+.video-link-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: transparent;
+  text-indent: -9999px;
+}
+
+iframe {
+  width: 100%;
+  height: 200px;
+  border: none;
+  border-radius: 4px;
+}
+
+
+/* ============================================
+   🚀 Projects Page
+============================================ */
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+  align-items: stretch;
+}
+
+.project-card {
+  background: white;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border-radius: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 480px;
+  margin-bottom: 1rem;
+}
+
+.project-card h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+
+.project-card a.project-button {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #2c3e50;
+  color: white;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.project-card a.project-button:hover {
+  background-color: #1a1a1a;
+}
+
+.project-card ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 1rem;
+}
+
+.project-card li {
+  margin-bottom: 0.5rem;
+}
+
+.project-card img {
+  width: 100%;
+  height: auto;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.project-button {
+  display: block;
+  width: fit-content;
+  min-width: 140px;
+  margin: 1rem auto 0;
+  padding: 0.5rem 1rem;
+  background-color: #2c3e50;
+  color: white;
+  border-radius: 4px;
+  font-weight: bold;
+  text-align: center;
+  transition: background-color 0.2s ease;
+}
+
+.project-button:hover {
+  background-color: #1a1a1a;
+}
+
+
+/* ============================================
+   🔗 Navbar
+============================================ */
+
+.navbar {
+  background-color: #2c3e50;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 2px;
+  transition: border-color 0.2s ease;
+}
+
+.navbar a:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.navbar a.active {
+  border-color: white;
+}
+
+
+/* ============================================
+   🚀 NASA Project Detail: APOD + Space Game
+============================================ */
+
+.nasa-detail {
+  padding-bottom: 4rem;
+}
+
+.nasa-hero {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.nasa-overview h1 {
+  font-size: 2.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.nasa-overview p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.nasa-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  margin: 3rem 0;
+}
+
+.nasa-images figure {
+  flex: 1 1 300px;
+  max-width: 400px;
+  text-align: center;
+}
+
+.nasa-images img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  margin-bottom: 0.5rem;
+}
+
+.nasa-images figcaption {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.nasa-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.nasa-links .btn {
+  background-color: #2c3e50;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.nasa-links .btn:hover {
+  background-color: #1a242f;
+}

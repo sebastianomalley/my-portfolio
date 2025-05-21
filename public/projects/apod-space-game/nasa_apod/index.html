@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link
+            href="assets/images/apod_favicon.ico"
+            rel="icon"
+            type="image/x-icon"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>NASA APOD Viewer</title>
+        <link rel="stylesheet" href="styles/nasa_apod.css" />
+    </head>
+    <body>
+        <div id="apod-container">
+            <img id="apod-image" alt="NASA's Astronomy Picture of the Day" />
+            <h1 id="apod-title">APOD Title</h1>
+            <p id="apod-date">Date</p>
+            <p id="apod-description">Description</p>
+        </div>
+
+        <div id="background-container">
+            <label for="background-level">Set Background:</label>
+            <select id="background-level">
+                <option value="level1">Level 1</option>
+                <option value="level2">Level 2</option>
+                <option value="level3">Level 3</option>
+            </select>
+            <button id="set-background-btn">Apply</button>
+        </div>
+
+        <div class="button-group">
+            <button id="prev-btn">Previous</button>
+            <button id="next-btn">Next</button>
+            <button id="like-btn">
+                <span>♥ Like</span>
+            </button>
+        </div>
+
+        <!-- Search Section. -->
+        <div id="search-container">
+            <input
+                type="text"
+                id="date-input"
+                placeholder="Enter date (YYYY-MM-DD)"
+                pattern="\d{4}-\d{2}-\d{2}"
+                title="Date must be in the format YYYY-MM-DD"
+            />
+            <button id="search-btn">Search</button>
+        </div>
+        <!-- Liked Images Section. -->
+        <div id="liked-images-container">
+            <h2>Liked Images</h2>
+            <div id="sort-container">
+                <label for="sort-options">Sort By:</label>
+                <select id="sort-options">
+                    <option value="date-asc">Date (Oldest First)</option>
+                    <option value="date-desc">Date (Newest First)</option>
+                    <option value="type-image">Type (Images First)</option>
+                    <option value="type-video">Type (Videos First)</option>
+                </select>
+            </div>
+            <ul id="liked-images-list"></ul>
+        </div>
+
+        <script type="module" src="scripts/main.js"></script>
+    </body>
+</html>

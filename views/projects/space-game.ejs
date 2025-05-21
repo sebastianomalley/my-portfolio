@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>NASA APOD + Space Game</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <%- include('../partials/navbar') %>
+
+  <main class="container nasa-detail">
+    <!-- Hero -->
+    <img 
+      src="/projects/apod-space-game/space_game/assets/images/titleScreen.png" 
+      alt="Space Game Title Screen" 
+      class="nasa-hero" 
+    />
+
+    <!-- Overview -->
+    <section class="nasa-overview">
+      <h1>APOD Slideshow + Space Game</h1>
+      <p><strong>Stack:</strong> JavaScript • HTML/CSS • NASA APOD API</p>
+      <p>
+        A two-part interactive experience: browse NASA’s Astronomy Picture of the Day,  
+        then launch a space shooter with your chosen image as the background.  
+        Use them together or enjoy each standalone.
+      </p>
+    </section>
+
+    <!-- Screenshots Grid -->
+    <section class="nasa-images">
+      <figure>
+        <img 
+          src="/projects/apod-space-game/nasa_apod/assets/images/NASA_mainGallery.png" 
+          alt="APOD Gallery Screenshot"
+        />
+        <figcaption>APOD Main Gallery</figcaption>
+      </figure>
+      <figure>
+        <img 
+          src="/projects/apod-space-game/space_game/assets/images/bossLevel.png" 
+          alt="Space Game Boss Level"
+        />
+        <figcaption>Space Game Boss Level</figcaption>
+      </figure>
+    </section>
+
+    <!-- Action Buttons -->
+    <section class="nasa-links">
+      <a href="/projects/apod-space-game/nasa_apod/" target="_blank" class="btn">🌌 Browse APOD</a>
+      <a href="/projects/apod-space-game/space_game/" target="_blank" class="btn">🚀 Play Space Game</a>
+      <a href="https://github.com/yourusername/apod-space-game" target="_blank" class="btn">💻 View Code</a>
+    </section>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

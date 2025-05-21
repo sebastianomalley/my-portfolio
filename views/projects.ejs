@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Projects</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <%- include('partials/navbar') %>
+
+    <main class="container">
+        <h1>Projects</h1>
+        <p>Here’s a selection of creative and technical projects I’ve built — ranging from API-driven apps to full-stack experiences using Node.js, Django, and JavaScript.</p>
+
+        <div class="project-grid">
+
+            <!-- Space Game + APOD -->
+            <a href="/projects/space-game" class="card-link">
+                <div class="project-card">
+                    <img src="/projects/apod-space-game/space_game/assets/images/titleScreen.png" alt="Space Game title screen" />
+                    <h2>APOD Slideshow + Space Game</h2>
+                    <p>Browse NASA’s Astronomy Picture of the Day and launch a custom space game using your favorite image as the game’s level background. Designed to work together, but also fun standalone.</p>
+                    <span class="project-button">Launch Experience</span>
+                </div>
+            </a>
+
+            <a href="/projects/nourishmate" class="card-link">
+                <div class="project-card">
+                    <img src="/images/nourishmate.jpg" alt="Nourishmate nutrition app" />
+                    <h2>Nourishmate</h2>
+                    <p>A Django + Bootstrap nutrition app that uses the Spoonacular API to suggest recipes, track vitamins, and help users meet plant-based goals.</p>
+                    <span class="project-button">🥦 Open Nourishmate</span>
+                </div>
+            </a>
+
+            <a href="/projects/weather-music" class="card-link">
+                <div class="project-card">
+                    <img src="/images/weather-music.jpg" alt="Weather + Music app" />
+                    <h2>Weather & Music App</h2>
+                    <p>Type in any city, get local weather + a playable local radio station. A fun mashup of APIs that delivers an immersive “sense of place.”</p>
+                    <span class="project-button">🌍 Try It Now</span>
+                </div>
+            </a>
+
+            <a href="/projects/family-wisdom" class="card-link">
+                <div class="project-card">
+                    <img src="/images/family-tips.jpg" alt="Family Wisdom app" />
+                    <h2>Family Wisdom Tips App</h2>
+                    <p>A Node.js CRUD app for sharing family advice and life tips. Features full API integration, Bootstrap styling, and custom routes for tips and contributors.</p>
+                    <span class="project-button">🧠 View Wisdom App</span>
+                </div>
+            </a>
+
+            <a href="/projects/ebay-clone" class="card-link">
+                <div class="project-card">
+                    <img src="/images/ebay-clone.jpg" alt="Post-apocalyptic eBay clone" />
+                    <h2>eBay Clone: After the Fall</h2>
+                    <p>A fully functional Django clone of eBay — with a dark, post-apocalyptic twist. Users can bid, post listings, and browse survivors’ trade goods.</p>
+                    <span class="project-button">💀 Visit Marketplace</span>
+                </div>
+            </a>
+
+            <a href="/projects/cs50-foundations" class="card-link">
+                <div class="project-card">
+                    <img src="/images/cs50.jpg" alt="CS50 Gmail + Google clones" />
+                    <h2>CS50 Foundations: Google & Gmail Clones</h2>
+                    <p>From Harvard’s CS50 — these clones focus on client-side routing, Django email logic, and search UX. Great exercises in UI mimicry and backend handling.</p>
+                    <span class="project-button">🔎 Explore Projects</span>
+                </div>
+            </a>
+
+        </div>
+    </main>
+    <%- include('partials/footer') %>
+</body>
+</html>
