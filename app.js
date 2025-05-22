@@ -1,5 +1,7 @@
 // app.js
 
+require('dotenv').config();
+
 const express = require('express');
 const path = require('path');
 
@@ -8,6 +10,12 @@ const app = express();
 // Set view engine to EJS
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
+// Serve API key to weather app securely
+app.get('/api/weather-key', (req, res) => {
+  res.json({ apiKey: process.env.OPENWEATHER_API_KEY });
+});
+
 
 // Serve static files (CSS, images, etc.)
 app.use(express.static(path.join(__dirname, 'public')));
@@ -44,7 +52,6 @@ app.get('/projects/ebay-clone', (req, res) => {
 app.get('/projects/cs50-foundations', (req, res) => {
   res.render('projects/cs50-foundations', { title: 'CS50 Foundations' });
 });
-
 
 
 app.get('/films', (req, res) => {

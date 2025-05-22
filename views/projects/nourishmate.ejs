@@ -8,22 +8,31 @@
 <body>
   <%- include('../partials/navbar') %>
 
-  <main class="container">
-    <h1>Nourishmate</h1>
-    <p><strong>Stack:</strong> Django, Bootstrap, Spoonacular API</p>
+  <main class="container nourishmate-detail">
+    <!-- Hero Image -->
+    <img 
+      src="/images/recipes.png" 
+      alt="Nourishmate App Preview" 
+      class="nourishmate-hero" 
+    />
 
-    <img src="/images/nourishmate.jpg" alt="Screenshot of Nourishmate app" style="max-width:100%; border-radius:8px; margin: 2rem 0;" />
+    <!-- Overview -->
+    <section class="nourishmate-overview">
+      <h1>Nourishmate</h1>
+      <p><strong>Stack:</strong> Django • Bootstrap • Spoonacular API</p>
+      <p>
+        Nourishmate is a nutrition app built to help users explore plant-based recipes, track vitamin intake, and meet dietary goals. 
+        It pulls real-time recipe data using the Spoonacular API and features a clean Bootstrap interface.
+      </p>
+    </section>
 
-    <p>
-      Nourishmate is a nutrition app built to help users explore plant-based recipes, track vitamin intake, and meet dietary goals. 
-      It pulls real-time recipe data using the Spoonacular API and features a clean Bootstrap interface.
-    </p>
-
-    <ul>
-      <li><a href="https://your-live-link.com" target="_blank">🌐 Visit App</a></li>
-      <li><a href="https://github.com/yourusername/nourishmate" target="_blank">💻 View Code on GitHub</a></li>
-    </ul>
+    <!-- Action Buttons -->
+    <section class="nourishmate-links">
+      <a href="http://localhost:8001" target="_blank" class="btn">🌱 Launch Nourishmate App</a>
+      <a href="https://github.com/sebastianomalley/nourishmate" target="_blank" class="btn">💻 View Code on GitHub</a>
+    </section>
   </main>
+
   <%- include('../partials/footer') %>
 </body>
 </html>

@@ -1479,7 +1479,7 @@ window.addEventListener('load', function() {
         ctx.font = '150px "Nasalization", sans-serif';
         ctx.fillStyle = gradient;
         ctx.textAlign = "center";
-        ctx.fillText("CONGRATULATIONS DEFENDER!!", canvas.width / 2, canvas.height / 2 - 60);
+        ctx.fillText("CONGRATULATIONS!!", canvas.width / 2, canvas.height / 2 - 60);
     
         // Blinking text below the victory message.
         if (frameCount % 60 < 30) {

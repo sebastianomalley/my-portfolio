@@ -118,14 +118,21 @@ iframe {
 
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 480px;
-  margin-bottom: 1rem;
+  justify-content: flex-start;
+
+  height: 100%;
 }
 
 .project-card h2 {
   margin-top: 0;
   margin-bottom: 1rem;
+}
+
+.project-card p {
+  flex-grow: 1;
+  margin: 0 0 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
 .project-card:hover {
@@ -163,18 +170,19 @@ iframe {
 
 .project-card img {
   width: 100%;
-  height: auto;
-  max-height: 180px;
-  object-fit: cover;
+  height: 220px;
+  object-fit: contain;
   border-radius: 6px;
   margin-bottom: 1rem;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  background-color: #f8f8f8;
 }
 
 .card-link {
   text-decoration: none;
   color: inherit;
   display: block;
+  padding-bottom: 2rem;
 }
 
 .project-button {
@@ -260,7 +268,7 @@ iframe {
   flex-wrap: wrap;
   gap: 2rem;
   justify-content: center;
-  margin: 3rem 0;
+  margin: 1.5rem 0 3rem 0;
 }
 
 .nasa-images figure {
@@ -271,10 +279,20 @@ iframe {
 
 .nasa-images img {
   width: 100%;
-  height: auto;
+  height: 220px;
+  object-fit: cover;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   margin-bottom: 0.5rem;
+}
+
+.nasa-images a img {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.nasa-images a:hover img {
+  transform: scale(1.03);
 }
 
 .nasa-images figcaption {
@@ -287,10 +305,12 @@ iframe {
   flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
-  margin-top: 2rem;
+  margin-top: 0.75rem;
 }
 
 .nasa-links .btn {
+  min-width: 180px;
+  text-align: center;
   background-color: #2c3e50;
   color: white;
   padding: 0.75rem 1.5rem;
@@ -303,3 +323,103 @@ iframe {
 .nasa-links .btn:hover {
   background-color: #1a242f;
 }
+
+
+/* ============================================
+  🍕 NOURISHMATE Project
+============================================ */
+
+.nourishmate-hero {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+.nourishmate-overview h1 {
+  font-size: 2.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.nourishmate-overview p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.nourishmate-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.nourishmate-links .btn {
+  min-width: 180px;
+  text-align: center;
+  background-color: #2c3e50;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.nourishmate-links .btn:hover {
+  background-color: #1a242f;
+}
+
+/* ============================================
+  🌤️ WEATHER Project
+============================================ */
+
+.weather-hero {
+  width: 100%;
+  max-height: 400px;
+  object-fit: contain; /* changed from cover to contain */
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #f8f8f8; /* helps frame transparent or padded images */
+}
+
+.weather-overview h1 {
+  font-size: 2.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.weather-overview p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.weather-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.weather-links .btn {
+  background-color: #2c3e50;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background 0.3s;
+  min-width: 180px;
+  text-align: center;
+}
+
+.weather-links .btn:hover {
+  background-color: #1a242f;
+}
+
