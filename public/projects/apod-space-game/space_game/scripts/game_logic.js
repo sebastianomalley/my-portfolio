@@ -1,5 +1,5 @@
 // game_logic.js
-
+import { fetchNasaKey } from '../../nasa_apod/scripts/api.js';
 // Protective onload.
 window.addEventListener('load', function() {
     const canvas = document.getElementById('gameCanvas');
@@ -156,47 +156,51 @@ window.addEventListener('load', function() {
 
     let gameAnimationFrameId = null; // Store game loop frame ID globally.
 
-    // NASA API key.  *** Is this something to keep private? YES!!  Will learn process. ***
-    const API_KEY = 'kHE8VXreA08UCkUF7d3gMlQDWnhMYqaWIHGsqOaZ';
-
     // ===========================
     // Image Fetching from NASA APOD API
     // ===========================
 
-    // Fetch image from NASA's APOD API for specific date.
-    async function fetchImage(date, imgElement, key) {
-      const APOD_URL = `https://api.nasa.gov/planetary/apod?api_key=${API_KEY}&date=${date}`;
+    // Fetch image from NASA's APOD API for a specific date.
+    async function fetchImage(dateInput, imgElement, imgKey) {
+      // 1) Make sure we have a real Date object
+      const dateObj = dateInput instanceof Date
+        ? dateInput
+        : new Date(dateInput);
+
+      // 2) Turn it into YYYY-MM-DD
+      const dateParam = dateObj.toISOString().split('T')[0];
+
+      // 3) Grab your secret key at runtime
+      const key = await fetchNasaKey();
+
+      // 4) Now build the URL with dateParam defined
+      const APOD_URL = `https://api.nasa.gov/planetary/apod?api_key=${key}&date=${dateParam}`;
+
       try {
         const response = await fetch(APOD_URL);
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch image");
-        }
+        if (!response.ok) throw new Error("Failed to fetch image");
 
         const data = await response.json();
-
-        if (!data.url) {
-          throw new Error("Image URL not found in response");
-        }
+        if (!data.url) throw new Error("Image URL not found in response");
 
         imgElement.src = data.url;
 
+        // 5) Mark this specific image as loaded
         imgElement.onload = () => {
-          imagesLoaded[key] = true;
+          imagesLoaded[imgKey] = true;
           checkAllImagesLoaded();
         };
-
         if (imgElement.complete) {
-          imagesLoaded[key] = true;
+          imagesLoaded[imgKey] = true;
           checkAllImagesLoaded();
         }
       } catch (error) {
-        console.error(`Error fetching image for ${key}:`, error);
-
-        imagesLoaded[key] = true;
+        console.error(`Error fetching image for ${dateParam}:`, error);
+        imagesLoaded[imgKey] = true;
         checkAllImagesLoaded();
       }
     }
+
 
     // ===========================
     // Canvas Resizing
@@ -534,12 +538,23 @@ window.addEventListener('load', function() {
       const barHeight = 100;
       ctx.fillStyle = 'black';
       ctx.fillRect(0, canvas.height - barHeight, canvas.width, barHeight);
-
-      // Ensure title music is playing.
-      if (!isTitleMusicPlaying) {
-        playTitleMusic();
-      }
     }
+
+    // once the user presses any key or clicks, we can play titleMusic
+    function unlockTitleMusic() {
+      if (!isTitleMusicPlaying) {
+        titleMusic.play().catch(() => {});  // now allowed, since it’s user-initiated
+        isTitleMusicPlaying = true;
+      }
+      // remove listeners so we only do this once
+      document.removeEventListener('keydown', unlockTitleMusic);
+      document.removeEventListener('click',   unlockTitleMusic);
+    }
+
+    // listen for the very first user gesture
+    document.addEventListener('keydown', unlockTitleMusic);
+    document.addEventListener('click',   unlockTitleMusic);
+
 
     frameCount = 0;
 
@@ -832,50 +847,57 @@ window.addEventListener('load', function() {
 
       // Add intense blue glow effect to the rocket.
       let flashTimer = duration * 60; // Convert duration to frames (assuming 60fps).
-      let originalDrawTarget = drawTarget; // Backup the original drawTarget function.
+      // Inside freezeRocket(), after you back up originalDrawTarget…
+      let originalDrawTarget = drawTarget;
 
+      // Override drawTarget to add the blue-glow effect:
       drawTarget = function () {
+        // 1) Recompute the rocket’s drawn size
+        const scaledWidth  = targetRadius * 4 * rocketScaleX;
+        const scaledHeight = targetRadius * 4 * rocketScaleY;
+
         ctx.save();
+
+        // 2) Your existing glow circle logic
         if (rocketHitFlashTime > 0) {
-          // Set the glow intensity and color.
-          const glowIntensity = Math.min(255, 100 + rocketHitFlashTime * 5); // Control glow intensity.
+          const glowIntensity = Math.min(255, 100 + rocketHitFlashTime * 5);
           const gradient = ctx.createRadialGradient(
-            targetX, targetY, targetRadius, // Inner circle (rocket boundary).
-            targetX, targetY, targetRadius * 2 // Outer circle for the glow.
+            targetX, targetY, targetRadius,
+            targetX, targetY, targetRadius * 2
           );
-      
-          // Create a gradient that transitions from bright blue to transparent.
-          gradient.addColorStop(0, `rgba(0, ${glowIntensity}, 255, 0.6)`); // Bright blue at the center.
-          gradient.addColorStop(1, `rgba(0, ${glowIntensity}, 255, 0)`);   // Transparent at the edges.
-      
+          gradient.addColorStop(0, `rgba(0, ${glowIntensity}, 255, 0.6)`);
+          gradient.addColorStop(1, `rgba(0, ${glowIntensity}, 255, 0)`);
           ctx.fillStyle = gradient;
           ctx.beginPath();
-          ctx.arc(targetX, targetY, targetRadius * 2, 0, Math.PI * 2); // Glow size around the rocket.
+          ctx.arc(targetX, targetY, targetRadius * 2, 0, Math.PI * 2);
           ctx.fill();
           ctx.closePath();
-      
-          rocketHitFlashTime = Math.max(0, rocketHitFlashTime - 1); // Decrease glow over time.
-        }
-        // Add blue glow effect around the rocket.
-        ctx.shadowBlur = 40; // Increased glow intensity.
-        ctx.shadowColor = 'rgb(0, 110, 255)'; // More intense blue color.
 
-        // Draw the rocket image with glow.
-        ctx.drawImage( 
+          rocketHitFlashTime = Math.max(0, rocketHitFlashTime - 1);
+        }
+
+        // 3) Shadow glow for the rocket
+        ctx.shadowBlur = 40;
+        ctx.shadowColor = 'rgb(0, 110, 255)';
+
+        // 4) Draw the rocket itself using our locally scoped dimensions
+        ctx.drawImage(
           targetImage,
-          targetX - scaledWidth / 2,
+          targetX - scaledWidth  / 2,
           targetY - scaledHeight / 2,
           scaledWidth,
-          scaledHeight 
+          scaledHeight
         );
 
         ctx.restore();
       };
-      // Restore the original drawTarget after the duration ends.
+
+      // Restore the original drawTarget after the freeze duration
       setTimeout(() => {
         drawTarget = originalDrawTarget;
         console.log("Rocket glow effect removed.");
-      }, duration * 1000); // Restore after `duration` seconds.
+      }, duration * 1000);
+
     }
 
     // ===========================
@@ -1583,8 +1605,12 @@ window.addEventListener('load', function() {
       laserSound.play().catch((err) => console.error('Error playing laser sound:', err));
       laserSound.volume = 0.5; // Set volume between 0.0 (mute) and 1.0 (max).
 
+      // Recompute the rocket's drawn size to match drawTarget():
+      const scaledWidth  = targetRadius * 4 * rocketScaleX;
+      const scaledHeight = targetRadius * 4 * rocketScaleY;
+
       // Calculate laser's starting position at the top center of the rocket.
-      const laserX = targetX; // Center horizontally.
+      const laserX = targetX;  
       const laserY = targetY - (scaledHeight / 2) + 10; // 10px offset above the top.
 
       laserPositions.push({
@@ -1592,6 +1618,7 @@ window.addEventListener('load', function() {
         y: laserY,
       });
     }
+
 
     // ===========================
     // Laser Update and Drawing
@@ -1937,24 +1964,25 @@ window.addEventListener('load', function() {
 
     // Draw target (rocket) with separate width and height scaling.
     function drawTarget() {
+      // Bail out if game over or rocket hidden
       if (gameOverFlag || !targetVisible) {
-        return; // Don't draw the rocket if the game is over.
+        return;
       }
 
-      if (targetVisible) { // Only draw target if it's visible.
-        // Update scaled dimensions.
-        scaledWidth = targetRadius * 4 * rocketScaleX;
-        scaledHeight = targetRadius * 4 * rocketScaleY;
+      // Compute these here so they're always in scope
+      const scaledWidth  = targetRadius * 4 * rocketScaleX;
+      const scaledHeight = targetRadius * 4 * rocketScaleY;
 
-        ctx.drawImage(
-          targetImage,
-          targetX - scaledWidth / 2,  // Center the image horizontally.
-          targetY - scaledHeight / 2, // Center the image vertically.
-          scaledWidth,
-          scaledHeight
-        );
-      }
+      // Draw the rocket centered on (targetX, targetY)
+      ctx.drawImage(
+        targetImage,
+        targetX - scaledWidth  / 2,
+        targetY - scaledHeight / 2,
+        scaledWidth,
+        scaledHeight
+      );
     }
+
 
       let lastTime = 0;
 

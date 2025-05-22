@@ -4,8 +4,7 @@
 import { showNoImageState, showLoadingState, clearVideoContainer, apodImage, apodTitle, apodDate, apodDescription, currentMediaType } from './ui.js';
 import { currentDate, normalizeDate, formatDate } from './storage.js'; // Put date helpers in storage.js.
 
-// NASA API key.  *** Is this something to keep private? ***
-const API_KEY = 'kHE8VXreA08UCkUF7d3gMlQDWnhMYqaWIHGsqOaZ';
+
 
 /**
  * Fetch and display Astronomy Picture of the Day (APOD) for a given date.
@@ -14,13 +13,25 @@ const API_KEY = 'kHE8VXreA08UCkUF7d3gMlQDWnhMYqaWIHGsqOaZ';
  * @param {boolean} isSearch - Indicates if the fetch is part of a search operation.
  * @returns {Promise<boolean>} - Returns true if the fetch and display are successful, otherwise false.
  */
+
+let nasaApiKey = null;
+export async function fetchNasaKey() {
+  if (!nasaApiKey) {
+    const res = await fetch('/api/nasa-key');
+    const { key } = await res.json();
+    nasaApiKey = key;
+  }
+  return nasaApiKey;
+}
+
 export async function fetchAndDisplayAPOD(utcdate, isSearch = false) {
   // Format the provided date to 'YYYY-MM-DD'.
   const formattedDate = utcdate.toISOString().split('T')[0];
   
   // Construct the APOD API URL with the formatted date and API key.
-  const APOD_URL = `https://api.nasa.gov/planetary/apod?api_key=${API_KEY}&date=${formattedDate}`;
-
+  const key = await fetchNasaKey();
+  const APOD_URL = `https://api.nasa.gov/planetary/apod?api_key=${key}&date=${formattedDate}`;
+  
   console.log("Fetching APOD data for date:", formattedDate);
 
   // Show the loading state in the UI.

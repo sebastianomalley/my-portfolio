@@ -16,6 +16,10 @@ app.get('/api/weather-key', (req, res) => {
   res.json({ apiKey: process.env.OPENWEATHER_API_KEY });
 });
 
+// serve NASA APOD key securely
+app.get('/api/nasa-key', (req, res) => {
+  res.json({ key: process.env.NASA_API_KEY });
+});
 
 // Serve static files (CSS, images, etc.)
 app.use(express.static(path.join(__dirname, 'public')));
